@@ -46,15 +46,19 @@ func ToStruct(interfaceArr []map[string]string, typeInterface interface{}, retur
 }
 
 func New(regexFile string) *Parser {
-	parser := new(Parser)
-
 	data, err := ioutil.ReadFile(regexFile)
 	if nil != err {
 		panic(err)
 	}
 
+  return Make(data)
+}
+
+func Make(data []byte) *Parser {
+	parser := new(Parser)
+
 	m := make(map[string][]map[string]string)
-	err = goyaml.Unmarshal(data, &m)
+	err := goyaml.Unmarshal(data, &m)
 	if err != nil {
 		panic(err)
 	}
